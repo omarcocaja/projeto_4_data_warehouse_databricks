@@ -1,0 +1,48 @@
+// Star Schema - Projeto Vendas
+
+Table dim_cliente {
+  customer_id int [pk]
+  nome varchar
+  idade int
+  genero varchar
+  estado_civil varchar
+  cidade varchar
+  estado varchar
+  timestamp_insercao timestamp
+}
+
+Table dim_produto {
+  product_id int [pk]
+  nome_produto varchar
+  categoria varchar
+  preco_unitario float
+  timestamp_insercao timestamp
+}
+
+Table dim_tempo {
+  data date [pk]
+  ano int
+  mes int
+  dia int
+  hora int
+  dia_semana varchar
+}
+
+Table fato_vendas {
+  order_id varchar [pk]
+  customer_id int
+  product_id int
+  timestamp_venda timestamp
+  data_venda date
+  quantidade int
+  preco_unitario float
+  valor_total float
+  timestamp_processamento timestamp
+  timestamp_carga timestamp
+}
+
+// Relações
+
+Ref: fato_vendas.customer_id > dim_cliente.customer_id
+Ref: fato_vendas.product_id > dim_produto.product_id
+Ref: fato_vendas.data_venda > dim_tempo.data
